@@ -17,6 +17,7 @@
 		84FBA0CF20652F6700C734F7 /* Pet+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FBA0CB20652F6700C734F7 /* Pet+CoreDataProperties.swift */; };
 		84FBA0D020652F6700C734F7 /* Person+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FBA0CC20652F6700C734F7 /* Person+CoreDataClass.swift */; };
 		84FBA0D120652F6700C734F7 /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FBA0CD20652F6700C734F7 /* Person+CoreDataProperties.swift */; };
+		84FBA0D42065377B00C734F7 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FBA0D32065377B00C734F7 /* TableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		84FBA0CB20652F6700C734F7 /* Pet+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pet+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		84FBA0CC20652F6700C734F7 /* Person+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataClass.swift"; sourceTree = "<group>"; };
 		84FBA0CD20652F6700C734F7 /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		84FBA0D32065377B00C734F7 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 			children = (
 				84FBA0D220652F7100C734F7 /* CoreData */,
 				84F7AF9720652BE40019E0D0 /* AppDelegate.swift */,
+				84FBA0D32065377B00C734F7 /* TableViewCell.swift */,
 				84F7AF9920652BE40019E0D0 /* ViewController.swift */,
 				84F7AF9B20652BE40019E0D0 /* Main.storyboard */,
 				84F7AFA120652BE40019E0D0 /* Assets.xcassets */,
@@ -160,6 +163,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84FBA0D120652F6700C734F7 /* Person+CoreDataProperties.swift in Sources */,
+				84FBA0D42065377B00C734F7 /* TableViewCell.swift in Sources */,
 				84F7AF9A20652BE40019E0D0 /* ViewController.swift in Sources */,
 				84F7AFA020652BE40019E0D0 /* DriveAppCloudModelTest.xcdatamodeld in Sources */,
 				84FBA0D020652F6700C734F7 /* Person+CoreDataClass.swift in Sources */,
