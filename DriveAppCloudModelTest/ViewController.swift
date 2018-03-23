@@ -8,11 +8,14 @@
 
 import UIKit
 import CloudKit
+import CoreData
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
 
     @IBOutlet weak var tableView: UITableView!
+    
+    var controller: NSFetchedResultsController<Person>!
     
     var persons = ["Frieda", "Peter"]
     var hairColor = ["blonde", "brown"]
@@ -25,22 +28,37 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        attemptFetch()
     }
 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        attemptFetch()
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCell
         
-        cell.personNameLabel.text = persons[indexPath.row]
-        cell.personHairColorLabel.text = hairColor[indexPath.row]
+        let person = controller.object(at: indexPath as IndexPath)
+        
+        cell.personNameLabel.text = person.name
+        cell.personHairColorLabel.text = person.haircolor
+        
+        
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 2
+        if let sections = controller.sections {
+            
+            let sectionInfo = sections[section]
+            
+            return sectionInfo.numberOfObjects
+        }
+        
+        return 0
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -81,6 +99,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         present(ac, animated: true, completion: nil)
     }
     
+    
+    
     @IBAction func addPersonPressed(_ sender: Any) {
         
         let ac = UIAlertController(title: "Add Person", message: "Add a Person to your Personlist", preferredStyle: .alert)
@@ -96,10 +116,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let add = UIAlertAction(title: "Add", style: .default) { (_) in
             
-            //            guard let personNameText = ac.textFields?.first?.text else { return }
-            //            guard let personHairColorText = ac.textFields?[1].text else { return }
+            guard let personNameText = ac.textFields?.first?.text else { return }
+            guard let personHairColorText = ac.textFields?[1].text else { return }
             
-            //            do something with these texts (enter them to cloud and coredata etc.)
+//            do something with these texts (enter them to cloud and coredata etc.)
+            
+            let person = Person(context: context)
+            
+            person.name = personNameText
+            person.haircolor = personHairColorText
+            
+            ad.saveContext()
+            
+            self.tableView.reloadData()
             
         }
         
@@ -109,6 +138,28 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         present(ac, animated: true, completion: nil)
     }
     
+    func attemptFetch() {
+        
+        let fetchRequest: NSFetchRequest<Person> = Person.fetchRequest()
+        let nameSort = NSSortDescriptor(key: "name", ascending: true)
+        
+        fetchRequest.sortDescriptors = [nameSort]
+        
+        let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
+        
+        controller.delegate = self as? NSFetchedResultsControllerDelegate
+        
+        self.controller = controller
+        
+        do {
+            
+            try controller.performFetch()
+        } catch {
+            
+            print("\(error as NSError)")
+        }
+        print("attemptFetch called")
+    }
     
 }
 
