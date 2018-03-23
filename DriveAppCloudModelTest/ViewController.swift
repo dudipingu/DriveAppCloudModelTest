@@ -52,16 +52,65 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         return 150
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let ac = UIAlertController(title: "Add Pet", message: "Add a pet for the Person \(persons[indexPath.row])", preferredStyle: .alert)
+        
+        ac.addTextField { (textField) in
+            textField.placeholder = "Enter Petname"
+        }
+        
+        ac.addTextField { (textField) in
+            textField.placeholder = "Enter Petage"
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let add = UIAlertAction(title: "Add", style: .default) { (_) in
+            
+//            guard let petRaceText = ac.textFields?.first?.text else { return }
+//            guard let petAgeText = ac.textFields?[1].text else { return }
+            
+//            do something with these texts (enter them to cloud and coredata etc.)
+            
+        }
+        
+        ac.addAction(cancel)
+        ac.addAction(add)
+        
+        present(ac, animated: true, completion: nil)
+    }
+    
+    @IBAction func addPersonPressed(_ sender: Any) {
+        
+        let ac = UIAlertController(title: "Add Person", message: "Add a Person to your Personlist", preferredStyle: .alert)
+        
+        ac.addTextField { (textField) in
+            textField.placeholder = "Enter Personname"
+        }
+        
+        ac.addTextField { (textField) in
+            textField.placeholder = "Enter Persons Haircolor"
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let add = UIAlertAction(title: "Add", style: .default) { (_) in
+            
+            //            guard let personNameText = ac.textFields?.first?.text else { return }
+            //            guard let personHairColorText = ac.textFields?[1].text else { return }
+            
+            //            do something with these texts (enter them to cloud and coredata etc.)
+            
+        }
+        
+        ac.addAction(cancel)
+        ac.addAction(add)
+        
+        present(ac, animated: true, completion: nil)
+    }
+    
+    
 }
-
-
-
-
-
-
-
-
-
 
 
 

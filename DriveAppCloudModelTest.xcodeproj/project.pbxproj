@@ -18,6 +18,7 @@
 		84FBA0D020652F6700C734F7 /* Person+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FBA0CC20652F6700C734F7 /* Person+CoreDataClass.swift */; };
 		84FBA0D120652F6700C734F7 /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FBA0CD20652F6700C734F7 /* Person+CoreDataProperties.swift */; };
 		84FBA0D42065377B00C734F7 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FBA0D32065377B00C734F7 /* TableViewCell.swift */; };
+		84FBA0D820653F0600C734F7 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FBA0D720653F0600C734F7 /* CloudKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,8 @@
 		84FBA0CC20652F6700C734F7 /* Person+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataClass.swift"; sourceTree = "<group>"; };
 		84FBA0CD20652F6700C734F7 /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		84FBA0D32065377B00C734F7 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		84FBA0D520653F0300C734F7 /* DriveAppCloudModelTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DriveAppCloudModelTest.entitlements; sourceTree = "<group>"; };
+		84FBA0D720653F0600C734F7 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84FBA0D820653F0600C734F7 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,6 +56,7 @@
 			children = (
 				84F7AF9620652BE40019E0D0 /* DriveAppCloudModelTest */,
 				84F7AF9520652BE40019E0D0 /* Products */,
+				84FBA0D620653F0600C734F7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,6 +71,7 @@
 		84F7AF9620652BE40019E0D0 /* DriveAppCloudModelTest */ = {
 			isa = PBXGroup;
 			children = (
+				84FBA0D520653F0300C734F7 /* DriveAppCloudModelTest.entitlements */,
 				84FBA0D220652F7100C734F7 /* CoreData */,
 				84F7AF9720652BE40019E0D0 /* AppDelegate.swift */,
 				84FBA0D32065377B00C734F7 /* TableViewCell.swift */,
@@ -88,6 +94,14 @@
 				84FBA0CD20652F6700C734F7 /* Person+CoreDataProperties.swift */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		84FBA0D620653F0600C734F7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				84FBA0D720653F0600C734F7 /* CloudKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -123,6 +137,14 @@
 					84F7AF9320652BE40019E0D0 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -306,6 +328,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DriveAppCloudModelTest/DriveAppCloudModelTest.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 38WN2Y837Z;
 				INFOPLIST_FILE = DriveAppCloudModelTest/Info.plist;
@@ -321,6 +344,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DriveAppCloudModelTest/DriveAppCloudModelTest.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 38WN2Y837Z;
 				INFOPLIST_FILE = DriveAppCloudModelTest/Info.plist;
