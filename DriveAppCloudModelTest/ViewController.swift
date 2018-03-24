@@ -15,7 +15,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     @IBOutlet weak var tableView: UITableView!
     
-    var controller: NSFetchedResultsController<Person>!
+    var personController: NSFetchedResultsController<Person>!
+    
+    var petController: NSFetchedResultsController<Pet>!
     
     var persons = ["Frieda", "Peter"]
     var hairColor = ["blonde", "brown"]
@@ -37,10 +39,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TableViewCell
         
-        let person = controller.object(at: indexPath as IndexPath)
+        let person = personController.object(at: indexPath as IndexPath)
         
         cell.personNameLabel.text = person.name
         cell.personHairColorLabel.text = person.haircolor
+        
+        cell.petLabel.text = createPetString(forPerson: person)
         
         
         
@@ -49,7 +53,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if let sections = controller.sections {
+        if let sections = personController.sections {
             
             let sectionInfo = sections[section]
             
@@ -73,13 +77,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         if editingStyle == .delete {
             
-            let person = self.controller.object(at: indexPath as IndexPath)
+            let person = self.personController.object(at: indexPath as IndexPath)
             context.delete(person as NSManagedObject)
             ad.saveContext()
         }
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        
+        if controller == personController {
         
         switch(type) {
             
@@ -102,11 +108,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             case .move:
                 break
         }
+            
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let ac = UIAlertController(title: "Add Pet", message: "Add a pet for the Person \(persons[indexPath.row])", preferredStyle: .alert)
+        let ac = UIAlertController(title: "Add Pet", message: "Add a pet for the Person \(String(describing: personController.object(at: indexPath).name))", preferredStyle: .alert)
         
         ac.addTextField { (textField) in
             textField.placeholder = "Enter Petname"
@@ -119,11 +127,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         let add = UIAlertAction(title: "Add", style: .default) { (_) in
             
-//            guard let petRaceText = ac.textFields?.first?.text else { return }
-//            guard let petAgeText = ac.textFields?[1].text else { return }
+        guard let petRaceText = ac.textFields?.first?.text else { return }
+        guard let petAgeText = ac.textFields?[1].text else { return }
             
 //            do something with these texts (enter them to cloud and coredata etc.)
             
+            let pet = Pet(context: context)
+            
+            pet.race = petRaceText
+            pet.age = petAgeText
+            pet.person = self.personController.object(at: indexPath)
+            
+            ad.saveContext()
         }
         
         ac.addAction(cancel)
@@ -171,9 +186,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         present(ac, animated: true, completion: nil)
     }
     
-    
-    
-    
     func attemptFetch() {
         
         let fetchRequest: NSFetchRequest<Person> = Person.fetchRequest()
@@ -185,7 +197,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         controller.delegate = self
         
-        self.controller = controller
+        self.personController = controller
         
         do {
             
@@ -195,6 +207,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             print("\(error as NSError)")
         }
         print("attemptFetch called")
+    }
+    
+    func createPetString(forPerson person: Person) -> String {
+        
+        var petString = ""
+        
+        let petArray = person.pet?.allObjects as! [Pet]
+        
+        for pet in petArray {
+            
+            petString += pet.race! + " " + pet.age! + "|" + " "
+        }
+        
+        return petString
     }
     
 }
