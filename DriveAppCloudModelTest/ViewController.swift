@@ -103,18 +103,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 break
         }
     }
-
-    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-
-        print("cintrollerWilLChange")
-        tableView.beginUpdates()
-    }
-
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-
-        print("controllerDidChange")
-        tableView.endUpdates()
-    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -183,6 +171,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         present(ac, animated: true, completion: nil)
     }
     
+    
+    
+    
     func attemptFetch() {
         
         let fetchRequest: NSFetchRequest<Person> = Person.fetchRequest()
@@ -192,7 +183,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: nil)
         
-        controller.delegate = self as? NSFetchedResultsControllerDelegate
+        controller.delegate = self
         
         self.controller = controller
         
