@@ -139,6 +139,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             pet.person = self.personController.object(at: indexPath)
             
             ad.saveContext()
+            
+            self.tableView.reloadData()
         }
         
         ac.addAction(cancel)
