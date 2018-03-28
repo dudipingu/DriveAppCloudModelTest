@@ -19,10 +19,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var petController: NSFetchedResultsController<Pet>!
     
-    var persons = ["Frieda", "Peter"]
-    var hairColor = ["blonde", "brown"]
-    var petRace = ["cat", "dog"]
-    var petAge = [1,2]
+    let database = CKContainer.default().privateCloudDatabase
+    
+    var persons = [CKRecord]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,8 +129,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         guard let petRaceText = ac.textFields?.first?.text else { return }
         guard let petAgeText = ac.textFields?[1].text else { return }
             
-//            do something with these texts (enter them to cloud and coredata etc.)
-            
             let pet = Pet(context: context)
             
             pet.race = petRaceText
@@ -169,8 +166,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             guard let personNameText = ac.textFields?.first?.text else { return }
             guard let personHairColorText = ac.textFields?[1].text else { return }
             
-//            do something with these texts (enter them to cloud and coredata etc.)
-            
             let person = Person(context: context)
             
             person.name = personNameText
@@ -179,7 +174,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             ad.saveContext()
             
             self.tableView.reloadData()
-            
         }
         
         ac.addAction(cancel)
@@ -187,6 +181,72 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         present(ac, animated: true, completion: nil)
     }
+    
+    @IBAction func pushToCloud(_ sender: Any) {
+        
+        //1 deletes the whole cloud (all person entities)
+        
+        let query = CKQuery(recordType: "Person", predicate: NSPredicate(value:true))
+        database.perform(query, inZoneWith: nil) { (records, _) in
+            
+            guard let records = records else { return }
+            
+            for record in records  {
+                
+                self.database.delete(withRecordID: record.recordID, completionHandler: { (recordID, error) in
+                    
+                    if let error = error {
+                        
+                        print(error)
+                    } else {
+                        
+                        print("deleted succesfully")
+                    }
+                })
+            }
+        }
+        
+        //get all core data data  with this fetch and save it in personController
+        
+        attemptFetch()
+        
+        let sectionInfo = personController.sections![0]
+        let numberOfPersons = sectionInfo.numberOfObjects
+        
+        // for every core data person create a new ckrecord (nothign done with pets yet)
+        
+        for person in 0..<numberOfPersons {
+            
+            let person = personController.object(at: IndexPath(row: person, section: 0))
+            
+            let newPerson = CKRecord(recordType: "Person")
+            newPerson.setValue(person.haircolor, forKey: "hairColor")
+            newPerson.setValue(person.name, forKey: "name")
+            
+            database.save(newPerson) { (record, Error) in
+                guard record != nil else  { return }
+                print("saved record")
+            }
+        }
+        
+        //problem: its not called in order how it should, we have to work with dispatchgroups and completion handlers, but im not quite familiar with them yet....
+        
+    }
+    
+    @IBAction func pullFromCloud(_ sender: Any) {
+        
+        //nothing in here yet
+        
+        print(self.persons.count)
+    }
+    
+    func queryDatabase() {
+        
+        
+        
+    }
+    
+    
     
     func attemptFetch() {
         

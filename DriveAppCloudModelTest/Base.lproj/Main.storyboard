@@ -88,11 +88,17 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A2m-8D-XDO">
                                         <rect key="frame" x="94" y="0.0" width="93.5" height="50"/>
-                                        <state key="normal" title="Button"/>
+                                        <state key="normal" title="Push Cloud"/>
+                                        <connections>
+                                            <action selector="pushToCloud:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Hop-XX-ie5"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="toq-ed-OF7">
                                         <rect key="frame" x="187.5" y="0.0" width="94" height="50"/>
-                                        <state key="normal" title="Button"/>
+                                        <state key="normal" title="Pull Cloud"/>
+                                        <connections>
+                                            <action selector="pullFromCloud:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Jsr-vY-8Tm"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IoQ-pC-vOv">
                                         <rect key="frame" x="281.5" y="0.0" width="93.5" height="50"/>
